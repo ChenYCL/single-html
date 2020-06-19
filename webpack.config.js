@@ -1,8 +1,11 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin"); //installed via npm
+const HtmlWebpackPlugin = require("html-webpack-plugin"); // installed via npm
 const path = require("path");
 const fs = require("fs");
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const ProcessControlPlugin = require('./ProcessControlPlugin');
 
+
+console.log('Build process is starting');
 fs.exists('dist', err => {
     if (err) {
     } else {
@@ -32,7 +35,7 @@ fs.exists('dist', err => {
 });
 
 
-// get model
+var js ='';
 let modelOBJ = {};
 let modelArr = fs.readdirSync("./model");
 modelArr.map((filename, idx) => {
@@ -56,7 +59,6 @@ imgArr.map((filename, idx) => {
 });
 console.log("\n图片转换完毕...开始打包\n");
 
-
 module.exports = {
     entry: "./index.js",
     node: {
@@ -65,6 +67,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "./dist"),
         filename: "all.bundle.js",
+        publicPath: "/"
     },
     mode: "production",
     module: {
@@ -86,13 +89,27 @@ module.exports = {
         ],
     },
     plugins: [
-        // new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin(),
+        new ProcessControlPlugin(),
         new HtmlWebpackPlugin({
             template: "./index.html",
-            title: "it's a template",
+            title: "it's a template1",
             inject: false,
             templateParameters: {
+
+                model_base64_data: (() => {
+                    let script = "";
+                    for (key in modelOBJ) {
+                        script += `var ${key}Model = "${modelOBJ[key]}";\n`;
+                    }
+                    return script;
+                })(),
+                images_base64_data: (() => {
+                    let script = "";
+                    for (key in imgOBJ) {
+                        script += `var ${key}_img = "${imgOBJ[key]}";\n`;
+                    }
+                    return script;
+                })(),
                 myscript: (() => {
                     function repeatRead() {
                         fs.readFileSync('dist/all.bundle.js', async (err, data) => {
@@ -113,20 +130,6 @@ module.exports = {
                     });
                     return d;
                 })(),
-                model_base64_data: (() => {
-                    let script = "";
-                    for (key in modelOBJ) {
-                        script += `var ${key}Model = "${modelOBJ[key]}";\n`;
-                    }
-                    return script;
-                })(),
-                images_base64_data: (() => {
-                    let script = "";
-                    for (key in imgOBJ) {
-                        script += `var ${key}_img = "${imgOBJ[key]}";\n`;
-                    }
-                    return script;
-                })(),
             },
             // minify: {
             //     removeComments: true,
@@ -134,6 +137,6 @@ module.exports = {
             //     collapseInlineTagWhitespace: true
             // }
             minify: true,
-        }),
+        },),
     ],
 };

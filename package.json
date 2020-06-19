@@ -9,6 +9,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "fs-extra": "^9.0.1",
         "node": "^14.4.0"
     },
     "devDependencies": {

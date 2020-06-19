@@ -43,14 +43,15 @@
         const contentType = "application/octet-stream";
         const blob = b64toBlob(sceneModel, contentType);
         const blobUrl = URL.createObjectURL(blob);
-
+        var myviewer = null;
         setTimeout(function() {
-            var myviewer = new marmoset.WebViewer(document.body.clientWidth, 600, blobUrl);
+            myviewer = new marmoset.WebViewer(document.body.clientWidth, 600, blobUrl);
             document.getElementById("view").appendChild(myviewer.domRoot);
             myviewer.loadScene();
         }, 300);
 
         function changeView(model) {
+            if(myviewer){myviewer.unload();myviewer=null;delete myviewer.scene}
             document.querySelector('#view div').remove();
             let blob = b64toBlob(model, contentType);
             let blobUrl = URL.createObjectURL(blob);

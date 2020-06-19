@@ -13,6 +13,12 @@ and with .mview model.
 
 # use
 
+```$javascript
+npm install 
+npm run build x3 //first time
+
+```
+
 global variable on window
 
 [filename]Model - model object eg. xxModel
