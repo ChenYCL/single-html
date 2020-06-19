@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <!--    依赖-->
-    <script desc="lib-js"><%= htmlWebpackPlugin.options.templateParameters.myscript %></script>
-    <!--    模型数据-->
-    <script desc="model-data"><%= htmlWebpackPlugin.options.templateParameters.model_base64_data %></script>
-    <script desc="img-data"><%= htmlWebpackPlugin.options.templateParameters.images_base64_data %></script>
+    <meta charset="UTF-8" />
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <!--    lib-->
+    <script desc="lib-js">
+        <%= htmlWebpackPlugin.options.templateParameters.myscript %>
+    </script>
+    <!--    data,image,model-->
+    <script desc="model-data">
+        <%= htmlWebpackPlugin.options.templateParameters.model_base64_data %>
+    </script>
+    <script desc="img-data">
+        <%= htmlWebpackPlugin.options.templateParameters.images_base64_data %>
+    </script>
 
     <script>
-          const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+        const b64toBlob = (b64Data, contentType = "", sliceSize = 512) => {
             const byteCharacters = atob(b64Data);
             const byteArrays = [];
 
@@ -19,56 +28,55 @@
 
                 const byteNumbers = new Array(slice.length);
                 for (let i = 0; i < slice.length; i++) {
-                  byteNumbers[i] = slice.charCodeAt(i);
+                    byteNumbers[i] = slice.charCodeAt(i);
                 }
 
                 const byteArray = new Uint8Array(byteNumbers);
                 byteArrays.push(byteArray);
-
             }
 
-          const blob = new Blob(byteArrays, {type: contentType});
-          return blob;
-}
-          const contentType = 'application/octet-stream';
-          const blob = b64toBlob(sceneModel, contentType);
-          const blobUrl = URL.createObjectURL(blob);
+            const blob = new Blob(byteArrays, {
+                type: contentType,
+            });
+            return blob;
+        };
+        const contentType = "application/octet-stream";
+        const blob = b64toBlob(sceneModel, contentType);
+        const blobUrl = URL.createObjectURL(blob);
 
+        var myviewer = null;
+        setTimeout(function() {
+            myviewer = new marmoset.WebViewer(document.body.clientWidth, 600, blobUrl);
+            document.getElementById("view").appendChild(myviewer.domRoot);
+            myviewer.loadScene();
+        }, 300);
 
-var myviewer = null;
-setTimeout(function () {
-   // myviewer = marmoset.embed( blobUrl, { width: document.body.clientWidth, height: 600, autoStart: true, pagePreset:true,fullFrame: false, pagePreset: false } );
-   myviewer = new marmoset.WebViewer( document.body.clientWidth, 600, blobUrl );
-   document.getElementById('view').appendChild(myviewer.domRoot)
-    myviewer.loadScene()
-},300)
-function changeView(model){
-    myviewer.unload();
-    let blob = b64toBlob(model, contentType);
-    let blobUrl = URL.createObjectURL(blob);
-    myviewer.loadScene(blobUrl)
-}
-</script>
+        function changeView(model) {
+            myviewer.unload();
+            let blob = b64toBlob(model, contentType);
+            let blobUrl = URL.createObjectURL(blob);
+            myviewer.loadScene(blobUrl);
+        }
+    </script>
 </head>
+
 <body>
-
-
     <div id="view"></div>
-    <button onclick="changeView(sceneModel)">model1</button>
-    <button onclick="changeView(testModel)">model2</button>
-    <p>MineX 来给你上课了</p>
-    <p>第一张图</p>
-    <img  id="img1" width="200" height="200">
-    <p>第二张图</p>
-        <img  id="img2" width="200" height="200">
-
-
+    <button onclick="changeView(sceneModel)">model1-scene.mview</button>
+    <button onclick="changeView(testModel)">model2-test.mview</button>
+    <p>desc here...</p>
+    <p>first pic</p>
+    <img id="img1" width="200" height="200" />
+    <p>second pic</p>
+    <img id="img2" width="200" height="200" />
 </body>
-<script type="module">
+<script>
+    document.getElementById("img1").src = `data:image/png;base64,${show_img}`;
 
-//    插入图片
-    document.getElementById('img1').src=`data:image/png;base64,${show_img}`
-// 图片名字 filename_img 格式 data:image/png|gif|jpg
-    document.getElementById('img2').src=`data:image/png;base64,${show_img}`
+    // image use example
+    // filename_img :  data:image/png|gif|jpg
+
+    document.getElementById("img2").src = `data:image/png;base64,${show_img}`;
 </script>
+
 </html>
