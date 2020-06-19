@@ -3,6 +3,35 @@ const path = require("path");
 const fs = require("fs");
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
+fs.exists('dist', err => {
+    if (err) {
+    } else {
+        fs.mkdir('dist', (error) => {
+            if (error) {
+
+            } else {
+                console.log('ok');
+            }
+        });
+        fs.writeFile('dist/index.html', '', 'utf8', (error) => {
+            if (error) {
+
+            } else {
+                console.log('ok');
+            }
+        });
+        fs.writeFile('dist/all.bundle.js', '', 'utf8', (error) => {
+            if (error) {
+
+            } else {
+                console.log('ok');
+
+            }
+        });
+    }
+});
+
+
 // get model
 let modelOBJ = {};
 let modelArr = fs.readdirSync("./model");
@@ -27,11 +56,12 @@ imgArr.map((filename, idx) => {
 });
 console.log("\n图片转换完毕...开始打包\n");
 
+
 module.exports = {
     entry: "./index.js",
-    // node: {
-    //     __dirname: true
-    // },
+    node: {
+        __dirname: true
+    },
     output: {
         path: path.resolve(__dirname, "./dist"),
         filename: "all.bundle.js",
@@ -56,16 +86,30 @@ module.exports = {
         ],
     },
     plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin(
-        ),
+        // new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: "./index.html",
             title: "it's a template",
+            inject: false,
             templateParameters: {
                 myscript: (() => {
-                    const d = fs.readFileSync("./dist/all.bundle.js", async (err, data) => {
-                        return data;
+                    function repeatRead() {
+                        fs.readFileSync('dist/all.bundle.js', async (err, data) => {
+                            if (err) {
+                                repeatRead()
+                            } else {
+                                return data;
+                            }
+                        })
+                    }
+
+                    const d = fs.readFileSync('dist/all.bundle.js', async (err, data) => {
+                        if (err) {
+                            repeatRead()
+                        } else {
+                            return data;
+                        }
                     });
                     return d;
                 })(),
