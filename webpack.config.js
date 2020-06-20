@@ -7,12 +7,12 @@ const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 const CopyPlugin = require('copy-webpack-plugin');
 
 console.log('Build process is starting');
-try {
-  fs.unlinkSync('outputDir/index.html')
-  //file removed
-} catch(err) {
-  console.error(err)
-}
+// try {
+//   fs.unlinkSync('outputDir/index.html')
+//   //file removed
+// } catch(err) {
+//   console.error(err)
+// }
 
 let modelOBJ = {};
 let modelArr = fs.readdirSync("./model");
