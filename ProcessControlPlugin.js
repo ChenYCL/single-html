@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 let CustomPlugin = function (options) {
     options = options || {};
@@ -10,13 +11,24 @@ CustomPlugin.prototype.apply = function (compiler) {
 
 
     // 如果希望在生成的资源输出到output指定目录之前执行某个功能
-    compiler.hooks.emit.tap('ProcessControl',()=>{
+    compiler.hooks.emit.tap('ProcessControl', () => {
 
     });
 
     // 编译完成之后
-    compiler.hooks.done.tap('ProcessControl',()=>{
-        console.log('--------------done--------------');
+    compiler.hooks.done.tap('ProcessControl', () => {
+        var sourceFile = path.join(__dirname, 'outputDir/index.html');
+        var destPath = path.join(__dirname, "dist", 'index.html');
+        var readStream = fs.createReadStream(sourceFile);
+        var writeStream = fs.createWriteStream(destPath);
+        readStream.pipe(writeStream);
+        console.log("move done")
+        try {
+            fs.unlinkSync('outputDir/index.html')
+            //file removed
+        } catch (err) {
+            console.error(err)
+        }
     })
 };
 

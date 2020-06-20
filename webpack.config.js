@@ -4,8 +4,15 @@ const fs = require("fs");
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const ProcessControlPlugin = require('./ProcessControlPlugin');
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+const CopyPlugin = require('copy-webpack-plugin');
 
 console.log('Build process is starting');
+try {
+  fs.unlinkSync('outputDir/index.html')
+  //file removed
+} catch(err) {
+  console.error(err)
+}
 
 let modelOBJ = {};
 let modelArr = fs.readdirSync("./model");
@@ -36,9 +43,8 @@ module.exports = {
         __dirname: true
     },
     output: {
-        path: path.resolve(__dirname, "./dist"),
+        path: path.resolve(__dirname, "outputDir"),
         filename: "all.bundle.js",
-        publicPath: "/"
     },
     mode: "production",
     module: {
@@ -73,6 +79,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: "./index.html",
+            filename:'index.html',
             title: "it's a template1",
             inject: false,
             templateParameters: {
@@ -92,22 +99,8 @@ module.exports = {
                     return script;
                 })(),
                 myscript: (() => {
-                    function repeatRead() {
-                        fs.readFileSync('dist/all.bundle.js', async (err, data) => {
-                            if (err) {
-                                repeatRead()
-                            } else {
-                                return data;
-                            }
-                        })
-                    }
-
-                    const d = fs.readFileSync('dist/all.bundle.js', async (err, data) => {
-                        if (err) {
-                            repeatRead()
-                        } else {
-                            return data;
-                        }
+                    const d = fs.readFileSync('outputDir/all.bundle.js', async (err, data) => {
+                        return data;
                     });
                     return d;
                 })(),
@@ -129,5 +122,10 @@ module.exports = {
                 removeEmptyAttributes: true,
             },
         },),
+        // new CopyPlugin({
+        //     patterns: [
+        //         {from: './outputDir/index.html', to: './dist/'}
+        //     ]
+        // }),
     ],
 };
