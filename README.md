@@ -21,6 +21,13 @@ npm run build x3 //first time
 
 global variable on window
 
-[filename]Model - model object eg. xxModel
+[filename]Model - model object,if imgs dir have scene.mview
 
-[filename]\_img - image object eg. show_img
+eg. sceneModel
+
+[filename]\_img - image object,if imgs dir have show.png 
+
+eg. show_img
+
+# Priview
+![image.png](https://i.loli.net/2020/06/20/u8rftObwxcnqMg3.png)
