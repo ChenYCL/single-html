@@ -29,5 +29,5 @@ eg. sceneModel
 
 eg. show_img
 
-# Priview
+# Preview
 ![image.png](https://i.loli.net/2020/06/20/u8rftObwxcnqMg3.png)
