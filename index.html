@@ -41,23 +41,22 @@
             return blob;
         };
         const contentType = "application/octet-stream";
-        const blob = b64toBlob(sceneModel, contentType);
-        const blobUrl = URL.createObjectURL(blob);
-		
 		function getModelURL(model) {return URL.createObjectURL(b64toBlob(model, contentType));}
-        var myviewer = null;
+        var blobUrl = getModelURL(sceneModel);
+		var myviewer = null;
+
         setTimeout(function() {
             myviewer = new marmoset.WebViewer(document.body.clientWidth, window.innerHeight-200, blobUrl);
             document.getElementById("view").appendChild(myviewer.domRoot);
             myviewer.loadScene();
         }, 300);
 
-		
         function changeView(model) {
-			myviewer.wake();
-			myviewer.resize(document.body.clientWidth, window.innerHeight-200);
-            myviewer.loadScene(getModelURL(model));
-			myviewer.reDrawScene();
+			document.querySelector('#view div').remove();
+			myviewer.unload();blobUrl = getModelURL(model);delete myviewer.canvas;myviewer=null;
+            myviewer = new marmoset.WebViewer(document.body.clientWidth, window.innerHeight-200, blobUrl);
+            document.getElementById("view").appendChild(myviewer.domRoot);
+            myviewer.loadScene();
         }
     </script>
 </head>
