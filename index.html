@@ -19,15 +19,15 @@
     </script>
 
     <script>
-        const b64toBlob = (b64Data, contentType = "", sliceSize = 512) => {
+        function b64toBlob(b64Data, contentType = "", sliceSize = 512){
             const byteCharacters = atob(b64Data);
             const byteArrays = [];
 
-            for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
                 const slice = byteCharacters.slice(offset, offset + sliceSize);
 
                 const byteNumbers = new Array(slice.length);
-                for (let i = 0; i < slice.length; i++) {
+                for (var i = 0; i < slice.length; i++) {
                     byteNumbers[i] = slice.charCodeAt(i);
                 }
 
@@ -53,8 +53,8 @@
         function changeView(model) {
             if(myviewer){myviewer.unload();myviewer=null;delete myviewer.scene}
             document.querySelector('#view div').remove();
-            let blob = b64toBlob(model, contentType);
-            let blobUrl = URL.createObjectURL(blob);
+            var blob = b64toBlob(model, contentType);
+            var blobUrl = URL.createObjectURL(blob);
             var myviewer = new marmoset.WebViewer(document.body.clientWidth, 600, blobUrl);
             document.getElementById("view").appendChild(myviewer.domRoot);
             myviewer.loadScene();
