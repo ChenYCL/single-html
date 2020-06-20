@@ -21,7 +21,7 @@ modelArr.map((filename, idx) => {
     var buff = fs.readFileSync(`./model/${filename}`);
     var base64data = buff.toString("base64");
     modelOBJ[filename.substr(0, filename.lastIndexOf("."))] = base64data;
-    console.log(base64data);
+    //console.log(base64data);
 });
 console.log("\n模型转换完毕...\n");
 
@@ -33,7 +33,7 @@ imgArr.map((filename, idx) => {
     var buff = fs.readFileSync(`./imgs/${filename}`);
     var base64data = Buffer.from(buff, "binary").toString("base64");
     imgOBJ[filename.substr(0, filename.lastIndexOf("."))] = base64data;
-    console.log(base64data);
+    //console.log(base64data);
 });
 console.log("\n图片转换完毕...开始打包\n");
 
