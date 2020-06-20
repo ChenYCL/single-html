@@ -43,21 +43,21 @@
         const contentType = "application/octet-stream";
         const blob = b64toBlob(sceneModel, contentType);
         const blobUrl = URL.createObjectURL(blob);
+		
+		function getModelURL(model) {return URL.createObjectURL(b64toBlob(model, contentType));}
         var myviewer = null;
         setTimeout(function() {
-            myviewer = new marmoset.WebViewer(document.body.clientWidth, 600, blobUrl);
+            myviewer = new marmoset.WebViewer(document.body.clientWidth, window.innerHeight-200, blobUrl);
             document.getElementById("view").appendChild(myviewer.domRoot);
             myviewer.loadScene();
         }, 300);
 
+		
         function changeView(model) {
-            if(myviewer){myviewer.unload();myviewer=null;delete myviewer.scene}
-            document.querySelector('#view div').remove();
-            var blob = b64toBlob(model, contentType);
-            var blobUrl = URL.createObjectURL(blob);
-            var myviewer = new marmoset.WebViewer(document.body.clientWidth, 600, blobUrl);
-            document.getElementById("view").appendChild(myviewer.domRoot);
-            myviewer.loadScene();
+			myviewer.wake();
+			myviewer.resize(document.body.clientWidth, window.innerHeight-200);
+            myviewer.loadScene(getModelURL(model));
+			myviewer.reDrawScene();
         }
     </script>
 </head>
@@ -68,9 +68,9 @@
     <button onclick="changeView(testModel)">model2-test.mview</button>
     <p>desc here...</p>
     <p>first pic</p>
-    <img id="img1" width="100%" height="800" />
+    <img id="img1" width="100%" height="100%" />
     <p>second pic</p>
-    <img id="img2" width="100%" height="800" />
+    <img id="img2" width="100%" height="100%" />
 </body>
 <script>
     document.getElementById("img1").src = `data:image/png;base64,${show_img}`;
