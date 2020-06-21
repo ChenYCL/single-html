@@ -14,20 +14,23 @@ and with .mview model.
 # use
 
 ```$javascript
-npm install 
-npm run build x3 //first time
+npm install
+npm run build
+
+// export  dist/index.html
 
 ```
 
 global variable on window
 
-[filename]Model - model object,if imgs dir have scene.mview
+[filename]\_model - model object,if imgs dir have scene.mview
 
-eg. sceneModel
+eg. scene_model
 
-[filename]\_img - image object,if imgs dir have show.png 
+[filename]\_img - image object,if imgs dir have show.png
 
 eg. show_img
 
 # Preview
+
 ![image.png](https://i.loli.net/2020/06/20/u8rftObwxcnqMg3.png)
