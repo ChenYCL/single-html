@@ -1,72 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>
-        <%= htmlWebpackPlugin.options.title %>
+      <%= htmlWebpackPlugin.options.title %>
     </title>
     <!--    lib-->
     <script desc="lib-js">
-        <%= htmlWebpackPlugin.options.templateParameters.myscript %>
+      <%= htmlWebpackPlugin.options.templateParameters.myscript %>
     </script>
     <!--    data,image,model-->
     <script desc="model-data">
-        <%= htmlWebpackPlugin.options.templateParameters.model_base64_data %>
+      <%= htmlWebpackPlugin.options.templateParameters.model_base64_data %>
     </script>
     <script desc="img-data">
-        <%= htmlWebpackPlugin.options.templateParameters.images_base64_data %>
+      <%= htmlWebpackPlugin.options.templateParameters.images_base64_data %>
     </script>
     <script>
-        function b64toBlob(b64Data, contentType = "", sliceSize = 512) {
-            const byteCharacters = atob(b64Data);
-            const byteArrays = [];
+      function b64toBlob(b64Data, contentType = "", sliceSize = 512) {
+        const byteCharacters = atob(b64Data);
+        const byteArrays = [];
 
-            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-                const slice = byteCharacters.slice(offset, offset + sliceSize);
+        for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+          const slice = byteCharacters.slice(offset, offset + sliceSize);
 
-                const byteNumbers = new Array(slice.length);
-                for (var i = 0; i < slice.length; i++) {
-                    byteNumbers[i] = slice.charCodeAt(i);
-                }
+          const byteNumbers = new Array(slice.length);
+          for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+          }
 
-                const byteArray = new Uint8Array(byteNumbers);
-                byteArrays.push(byteArray);
-            }
-
-            const blob = new Blob(byteArrays, {
-                type: contentType,
-            });
-            return blob;
+          const byteArray = new Uint8Array(byteNumbers);
+          byteArrays.push(byteArray);
         }
-        const contentType = "application/octet-stream";
 
-        function getModelURL(model) {
-            return URL.createObjectURL(b64toBlob(model, contentType));
-        }
-        var blobUrl = getModelURL(scene_model);
-        var myviewer = null;
+        const blob = new Blob(byteArrays, {
+          type: contentType,
+        });
+        return blob;
+      }
+      const contentType = "application/octet-stream";
 
-        setTimeout(function() {
-            myviewer = new marmoset.WebViewer(document.body.clientWidth, window.innerHeight - 200, blobUrl);
-            document.getElementById("view").appendChild(myviewer.domRoot);
-            myviewer.loadScene();
-        }, 300);
+      function getModelURL(model) {
+        return URL.createObjectURL(b64toBlob(model, contentType));
+      }
+      var blobUrl = getModelURL(scene_model);
+      var myviewer = null;
 
-        function changeView(model) {
-            document.querySelector("#view div").remove();
-            myviewer.unload();
-            blobUrl = getModelURL(model);
-            delete myviewer.canvas;
-            myviewer = null;
-            myviewer = new marmoset.WebViewer(document.body.clientWidth, window.innerHeight - 200, blobUrl);
-            document.getElementById("view").appendChild(myviewer.domRoot);
-            myviewer.loadScene();
-        }
+      setTimeout(function () {
+        myviewer = new marmoset.WebViewer(document.body.clientWidth, window.innerHeight - 200, blobUrl);
+        document.getElementById("view").appendChild(myviewer.domRoot);
+        myviewer.loadScene();
+      }, 300);
+
+      function changeView(model) {
+        document.querySelector("#view div").remove();
+        myviewer.unload();
+        blobUrl = getModelURL(model);
+        delete myviewer.canvas;
+        myviewer = null;
+        myviewer = new marmoset.WebViewer(document.body.clientWidth, window.innerHeight - 200, blobUrl);
+        document.getElementById("view").appendChild(myviewer.domRoot);
+        myviewer.loadScene();
+      }
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="view"></div>
     <button onclick="changeView(scene_model)">model1-scene.mview</button>
     <button onclick="changeView(test_model)">model2-test.mview</button>
@@ -75,14 +74,13 @@
     <img id="img1" width="100%" height="100%" />
     <p>second pic</p>
     <img id="img2" width="100%" height="100%" />
-</body>
-<script>
+  </body>
+  <script>
     document.getElementById("img1").src = `data:image/png;base64,${show_img}`;
 
     // image use example
     // filename_img :  data:image/png|gif|jpg
 
     document.getElementById("img2").src = `data:image/png;base64,${show_img}`;
-</script>
-
+  </script>
 </html>

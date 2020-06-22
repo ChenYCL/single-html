@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "npx webpack"
+        "build": "npx webpack",
+        "fix-memory-limit": "cross-env LIMIT=8096 increase-memory-limit"
     },
     "author": "",
     "license": "ISC",
@@ -15,11 +16,13 @@
     },
     "devDependencies": {
         "clean-webpack-plugin": "^3.0.0",
+        "cross-env": "^7.0.2",
         "css-loader": "^3.6.0",
         "extract-loader": "^5.1.0",
         "file-loader": "^6.0.0",
         "html-loader": "^1.1.0",
         "html-webpack-plugin": "^4.3.0",
+        "increase-memory-limit": "^1.0.7",
         "raw-loader": "^4.0.1",
         "style-loader": "^1.2.1",
         "url-loader": "^4.1.0",
