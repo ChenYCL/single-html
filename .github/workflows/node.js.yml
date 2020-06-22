@@ -15,6 +15,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           npm install
+          npm run-script fix-memory-limit
           npm run-script build
 
       - name: Deploy to GitHub Pages
