@@ -69,15 +69,15 @@ module.exports = {
     },
     plugins: [
         new ProcessControlPlugin(),
-        new ParallelUglifyPlugin({
-            cacheDir: "./node_modules/cache/",
-            uglifyJS: {
-                output: {
-                    comments: false,
-                },
-                warnings: false,
-            },
-        }),
+        // new ParallelUglifyPlugin({
+        //     cacheDir: "./node_modules/cache/",
+        //     uglifyJS: {
+        //         output: {
+        //             comments: false,
+        //         },
+        //         warnings: false,
+        //     },
+        // }),
 
         new HtmlWebpackPlugin({
             template: "./index.html",
@@ -106,22 +106,22 @@ module.exports = {
                     return d;
                 })(),
             },
-            minify: {
-                //删除html空格
-                collapseWhitespace: true,
-                //尽可能使用直接Unicode字符
-                decodeEntities: true,
-                //指定最大行长度。压缩输出将在有效的HTML分割点按换行符分割
-                // maxLineLength:30,
-                //在样式元素和样式属性中缩小CSS（使用clean-css）
-                minifyCSS: true,
-                //缩小脚本元素和事件属性中的JavaScript（使用UglifyJS）
-                minifyJS: true,
-                //尽可能删除属性周围的引号
-                removeAttributeQuotes: true,
-                //删除内容为空的属性
-                removeEmptyAttributes: true,
-            },
+            // minify: {
+            //     //删除html空格
+            //     collapseWhitespace: true,
+            //     //尽可能使用直接Unicode字符
+            //     decodeEntities: true,
+            //     //指定最大行长度。压缩输出将在有效的HTML分割点按换行符分割
+            //     // maxLineLength:30,
+            //     //在样式元素和样式属性中缩小CSS（使用clean-css）
+            //     minifyCSS: true,
+            //     //缩小脚本元素和事件属性中的JavaScript（使用UglifyJS）
+            //     minifyJS: true,
+            //     //尽可能删除属性周围的引号
+            //     removeAttributeQuotes: true,
+            //     //删除内容为空的属性
+            //     removeEmptyAttributes: true,
+            // },
         }),
 
         // new CopyPlugin({
