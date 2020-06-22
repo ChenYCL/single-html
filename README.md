@@ -4,6 +4,9 @@ it's teamplate export a single html with webpack,nodejs, make images to base64 t
 and with .mview model.
 
 可以将图片和模型导出为完整html，配合wallperEngine 可做壁纸，使用ModelView_WallpaperEngine_templatee.html模版导出
+
+## [model demo](https://github.com/ChenYCL/single-html/tree/wallpaper)
+
 # rules
 
 - imgs
