@@ -23,6 +23,7 @@ and with .mview model.
 
 ```$javascript
 npm install
+npm run fix-memory-limit
 npm run build
 
 // export  dist/index.html 
