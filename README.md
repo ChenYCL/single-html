@@ -18,6 +18,7 @@ npm install
 npm run build
 
 // export  dist/index.html
+// make wallper 3d picture,change webpack.config.js 'index.html' to '*template.html'
 
 ```
 
