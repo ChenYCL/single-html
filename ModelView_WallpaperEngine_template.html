@@ -41,20 +41,20 @@
 		function getModelURL(model) {return URL.createObjectURL(b64toBlob(model, contentType));}
         const blobUrl = getModelURL(sceneModel); 
 		marmoset.noUserInterface = true; //please be considerate
+		var myviewer = null;
         setTimeout(function() {
-            var myviewer = new marmoset.WebViewer(window.innerWidth, window.innerHeight, blobUrl);
-            document.getElementById("view").appendChild(myviewer.domRoot);
+            myviewer = new marmoset.WebViewer(window.innerWidth, window.innerHeight, blobUrl);
+			document.getElementById("view").appendChild(myviewer.domRoot);
 			myviewer.domRoot.style.position = "absolute", myviewer.domRoot.style.left = myviewer.domRoot.style.top = 0;
-            myviewer.loadScene();
+			myviewer.loadScene();
         }, 300);
-        setTimeout(function() {
-		document.getElementById('marmosetUI').addEventListener('mousemove', function(){console.log('BlockMousemove');this.outerHTML = this.outerHTML;}, false);
-		document.getElementById('marmosetUI').addEventListener('mousewheel', function(){console.log('BlockMousewheel');this.outerHTML = this.outerHTML;}, false);
-		document.getElementById('marmosetUI').addEventListener('wheel', function(){console.log('Blockwheel');this.outerHTML = this.outerHTML;}, false);
-		document.getElementById('marmosetUI').addEventListener('touchstart', function(){console.log('BlockTouchstart');this.outerHTML = this.outerHTML;}, false);
-		document.getElementById('marmosetUI').addEventListener('touchmove', function(){console.log('BlockTouchmove');this.outerHTML = this.outerHTML;}, false);
-		}, 400);
-
+	  var timer = null;
+	  timer = setInterval(function () {
+	          if (myviewer && myviewer.scene && myviewer.scene.complete()) {
+	              document.getElementById("marmosetUI").outerHTML = document.getElementById("marmosetUI");
+	              clearInterval(timer);
+	          }
+	      }, 100);
     </script>
 
 </body>
