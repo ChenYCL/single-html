@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "npx webpack",
+        "build": "webpack --config webpack.config.js",
+        "wallper": "webpack --config wallper.config.js",
         "fix-memory-limit": "cross-env LIMIT=8096 increase-memory-limit"
     },
     "author": "",

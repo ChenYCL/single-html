@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const { node } = require("./webpack.config");
 
 let CustomPlugin = function(options) {
     options = options || {};

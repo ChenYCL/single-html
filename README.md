@@ -24,7 +24,8 @@ and with .mview model.
 ```$javascript
 npm install
 npm run fix-memory-limit
-npm run build
+npm run build // normal
+npm run wallper // for wallper engine
 
 // export  dist/index.html 
 // 导出位置 dist/index.htl

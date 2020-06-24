@@ -17,6 +17,9 @@
     <script desc="img-data">
         <%= htmlWebpackPlugin.options.templateParameters.images_base64_data %>
     </script>
+    <script desc="mp3-data">
+        <%= htmlWebpackPlugin.options.templateParameters.mp3_base64_data %>
+    </script>
     <script>
         function b64toBlob(b64Data, contentType = "", sliceSize = 512) {
             const byteCharacters = atob(b64Data);
@@ -73,16 +76,22 @@
     <p>desc here...</p>
     <p>first pic</p>
     <img id="img1" width="100%" height="100%" />
+    <audio   controls>
+        <source id="mp3" type="audio/mpeg">
+    </audio>
     <p>second pic</p>
     <img id="img2" width="100%" height="100%" />
 </body>
 <script>
-    document.getElementById("img1").src = `data:image/png;base64,${show_img}`;
 
     // image use example
     // filename_img :  data:image/png|gif|jpg
-
     document.getElementById("img2").src = `data:image/png;base64,${show_img}`;
+    document.getElementById("img1").src = `data:image/png;base64,${show_img}`;
+
+    document.getElementById("mp3").src = `data:audio/mpeg;base64,${LaSoLa_mp3 }`;
+
+
 </script>
 
 </html>

@@ -3,3 +3,4 @@
 node_modules
 dist/index.html
 outputDir/index.html
+model
