@@ -44,25 +44,24 @@
         }
         const contentType = "application/octet-stream";
 
-        function getModelURL(model) {
-            return URL.createObjectURL(b64toBlob(model, contentType));
-        }
-        var blobUrl = getModelURL(scene_model);
-        var myviewer = null;
-        marmoset.noUserInterface = true; //please be considerate
+		function getModelURL(model) {return URL.createObjectURL(b64toBlob(model, contentType));}
+        const blobUrl = getModelURL(scene_model);
+		marmoset.noUserInterface = true; //please be considerate
+		var myviewer = null;
         setTimeout(function() {
-            myviewer = new marmoset.WebViewer(document.body.clientWidth, window.innerHeight, blobUrl);
-            document.getElementById("view").appendChild(myviewer.domRoot);
-            myviewer.domRoot.style.position = "absolute", myviewer.domRoot.style.left = myviewer.domRoot.style.top = 0;
-            myviewer.loadScene();
+            myviewer = new marmoset.WebViewer(window.innerWidth, window.innerHeight, blobUrl);
+			document.getElementById("view").appendChild(myviewer.domRoot);
+			myviewer.domRoot.style.position = "absolute", myviewer.domRoot.style.left = myviewer.domRoot.style.top = 0;
+			myviewer.loadScene();
         }, 300);
-        var timer = null;
-        timer = setInterval(function () {
-            if (myviewer && myviewer.scene && myviewer.scene.complete()) {
-                document.getElementById("marmosetUI").outerHTML = document.getElementById("marmosetUI");
-                clearInterval(timer);
-            }
-        }, 100);
+	  var timer = null;
+	  timer = setInterval(function () {
+	          if (myviewer && myviewer.scene && myviewer.scene.complete()) {
+	              document.getElementById("marmosetUI").outerHTML = document.getElementById("marmosetUI");
+	              clearInterval(timer);
+	          }
+	      }, 100);
+
     </script>
 </head>
 
