@@ -29,8 +29,7 @@ npm run wallper // for wallper engine
 
 // export  dist/index.html 
 // 导出位置 dist/index.htl
-// make wallper 3d picture,change webpack.config.js 'index.html' to '*template.html'
-// 如果需要壁纸配置请使用ModelView_WallpaperEngine_template.html,wepback.config.js 中修改 83 行 template: "ModelView_WallpaperEngine_template.html",
+
 
 ```
 
